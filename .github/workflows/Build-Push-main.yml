@@ -28,8 +28,8 @@ jobs:
       - name: Docker build for Release.
         run: |
             DATE=$(date "+%y.%m.%d")
-            docker build -t ${{ secrets.REGISTRY_002 }}/scanner_api_v2:latest .
-            docker build -t ${{ secrets.REGISTRY_002 }}/scanner_api_v2:$DATE .
+            docker build -t ${{ secrets.REGISTRY_002 }}/oauth-server:latest .
+            docker build -t ${{ secrets.REGISTRY_002 }}/oauth-server:$DATE .
 
       - name: Docker push
         run: |

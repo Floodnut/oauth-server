@@ -31,8 +31,6 @@ jobs:
           port: ${{ secrets.API_SERVER_PORT }}
           script: |
             DATE=$(date "+%y.%m.%d")
-            docker build -t ${{ secrets.REGISTRY_002 }}/scanner_api_v2:dev-$DATE ./backend-scanner/
-            docker build -t ${{ secrets.REGISTRY_002 }}/scanner_api_v2:dev-latest ./backend-scanner/
-            docker push ${{ secrets.REGISTRY_002 }}/scanner_api_v2:dev-$DATE
-            docker push ${{ secrets.REGISTRY_002 }}/scanner_api_v2:dev-latest
+            docker build -t ${{ secrets.REGISTRY_002 }}/oauth-server:dev ./oauth-scanner/
+            docker push ${{ secrets.REGISTRY_002 }}/oauth-server:dev
 
