@@ -23,4 +23,15 @@ public class GithubToken extends Token{
         this.scope = scope;
         this.tokenType = tokenType;
     }
+
+    public static GithubToken toDto(GithubToken token){
+        return GithubToken.builder()
+                    .accessToken(token.getAccessToken())
+                    .refreshToken(token.getRefreshToken())
+                    .expiresIn(token.getExpiresIn())
+                    .refreshTokenExpiresIn(token.getRefreshTokenExpiresIn())
+                    .scope(token.getScope())
+                    .tokenType(token.getTokenType())
+                .build();
+    }
 }
