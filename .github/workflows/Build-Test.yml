@@ -1,4 +1,4 @@
-name: SCANNER-Build-Test-on-PR CI/CD
+name: BUILD
 
 on:
   pull_request:

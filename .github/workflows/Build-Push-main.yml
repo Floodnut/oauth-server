@@ -1,4 +1,4 @@
-name: SCANNER-PROD CI/CD
+name: Deploy
 
 on:
   push:
@@ -22,17 +22,24 @@ jobs:
       - name: Build Project
         run: ./gradlew build
 
-      - name: Docker login
-        run: docker login -u ${{ secrets.REGISTRY_USER }} -p ${{ secrets.REGISTRY_PW }}
+      - name: Docker Build
+        run: docker build -t ${{ secrets.REGISTRY }}/oauth-server .
 
-      - name: Docker build for Release.
-        run: |
-            DATE=$(date "+%y.%m.%d")
-            docker build -t ${{ secrets.REGISTRY_002 }}/oauth-server:latest .
-            docker build -t ${{ secrets.REGISTRY_002 }}/oauth-server:$DATE .
+      - name: Docker Login
+        run: docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Docker push
-        run: |
-            DATE=$(date "+%y.%m.%d")
-            docker push ${{ secrets.REGISTRY_002 }}/scanner_api_v2:latest
-            docker push ${{ secrets.REGISTRY_002 }}/scanner_api_v2:$DATE 
+      - name: Docker Push
+        run: docker push ${{ secrets.REGISTRY }}/oauth-server
+
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.API_SERVER_HOST }}
+          username: ${{ secrets.API_SERVER_SSH_ID }}
+          key: ${{ secrets.API_SERVER_SSH }}
+          port: ${{ secrets.API_SERVER_PORT }}
+          script: |
+            cd ${{ secrets.DEPLOY_PATH }}
+            docker pull ${{ secrets.REGISTRY }}/oauth-server
+            docker compose up -d
+
