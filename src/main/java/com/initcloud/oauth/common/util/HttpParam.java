@@ -1,13 +1,38 @@
 package com.initcloud.oauth.common.util;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HttpParam {
+
+    @Getter
+    @Setter
+    public static class Header{
+        List<String> keys;
+        List<String> values;
+
+        public Header(){
+            this.keys = new ArrayList<>();
+            this.values = new ArrayList<>();
+        }
+
+        public Header(String key, String value){
+            this.keys = new ArrayList<>();
+            this.values = new ArrayList<>();
+
+            keys.add(key);
+            values.add(value);
+        }
+
+        public void add(String key, String value){
+            keys.add(key);
+            values.add(value);
+        }
+    }
 
     @Getter
     @Setter
@@ -75,13 +100,9 @@ public class HttpParam {
 
     @Getter
     @Setter
-    public static class Body{
-
-    }
-
-    @Getter
-    @Setter
-    public static class Header{
-
+    @AllArgsConstructor
+    public static class Body<T>{
+        private String contentType;
+        private T data;
     }
 }

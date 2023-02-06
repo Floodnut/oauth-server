@@ -20,7 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class GithubOAuthController {
 
     private final GithubOAuthService oAuthService;
-;
+
+    /* Authorization Code */
     @GetMapping("/auth")
     public void authorizeGithub(){
         oAuthService.getAuthorize();
@@ -50,4 +51,9 @@ public class GithubOAuthController {
                 .body(new ApiResponse<>(new GithubToken(accessToken, refreshToken,
                         expiresIn, refreshTokenExpiresIn, scope, tokenType)));
     }
+
+
+    /* Implicit */
+    /* Resource Owner Password */
+    /* Client Credentials */
 }

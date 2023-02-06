@@ -3,7 +3,6 @@ package com.initcloud.oauth.common.util;
 
 import com.initcloud.oauth.common.exception.ApiException;
 import com.initcloud.oauth.common.response.error.ErrorCode;
-import com.initcloud.oauth.security.config.Properties;
 import lombok.NoArgsConstructor;
 import org.json.simple.parser.JSONParser;
 import java.io.BufferedReader;
@@ -15,7 +14,10 @@ import java.net.URL;
 @NoArgsConstructor
 public class HttpRequest {
 
-    public static Object get(String base, String path, String query){
+    public static Object get(HttpParam.Header header,
+                             String base,
+                             String path,
+                             String query){
         try{
             String fullUrl = base;
 
@@ -32,6 +34,11 @@ public class HttpRequest {
             conn.setUseCaches(false);
             conn.setDoOutput(true);
 
+            if(header != null){
+                for(int i = 0 ; i < header.getKeys().size() ; i++)
+                    conn.setRequestProperty(header.getKeys().get(i), header.getValues().get(i));
+            }
+
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String inputLine;
             StringBuffer response = new StringBuffer();
@@ -46,7 +53,42 @@ public class HttpRequest {
         }
     }
 
-    public static String post(){
-        return null;
+    public static Object post(HttpParam.Header header,
+                              HttpParam.Body body,
+                              String base,
+                              String path,
+                              String query){
+        try{
+            String fullUrl = base;
+
+            if(path != null)
+                fullUrl += path;
+
+            if(query != null)
+                fullUrl += query;
+
+            URL url = new URL(fullUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setUseCaches(false);
+            conn.setDoOutput(true);
+
+            if(header != null){
+                for(int i = 0 ; i < header.getKeys().size() ; i++)
+                    conn.setRequestProperty(header.getKeys().get(i), header.getValues().get(i));
+            }
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null)
+                response.append(inputLine);
+
+            in.close();
+
+            return response.toString();
+        } catch (Exception e){
+            throw new ApiException(ErrorCode.ERROR_4001);
+        }
     }
 }
