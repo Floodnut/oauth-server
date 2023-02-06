@@ -1,17 +1,7 @@
 services:
-  initcloud_nginx:
-    image: nginx:1.21.5-alpine
-    ports:
-      - 80:80
-    volumes:
-      - ./volume/nginx.conf:/etc/nginx/nginx.conf
-    container_name: initcloud_nginx
-    depends_on:
-      - initcloud_oauth
-    restart: always
   initcloud_oauth:
     container_name: initcloud_oauth_server
-    image: floodnut/oauth_server
+    image: floodnut/oauth-server
     ports:
       - ${OAUTH_PORT}:8080
     env_file:
