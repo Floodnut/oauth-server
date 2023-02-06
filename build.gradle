@@ -37,9 +37,6 @@ dependencies {
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
-
-    implementation 'org.thymeleaf:thymeleaf:3.1.1.RELEASE'
 
     // https://mvnrepository.com/artifact/io.jsonwebtoken
     implementation 'io.jsonwebtoken:jjwt:0.9.1'

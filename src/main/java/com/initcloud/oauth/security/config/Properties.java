@@ -20,6 +20,9 @@ public class Properties {
     private String baseUrl;
 
     @Getter
+    private String callback;
+
+    @Getter
     private String appClientId;
 
     @Getter
@@ -28,6 +31,7 @@ public class Properties {
     @PostConstruct
     public void oAuthInit(){
         this.baseUrl = environment.getProperty("BASE_URL");
+        this.callback = environment.getProperty("CALLBACK");
         this.appClientId = environment.getProperty("GITHUB_APP_CLIENT_ID");
         this.appClientSecret = environment.getProperty("GITHUB_APP_CLIENT_SECRET");
 
