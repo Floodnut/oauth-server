@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
@@ -23,8 +25,9 @@ public class GithubOAuthController {
 
     /* Authorization Code */
     @GetMapping("/auth")
-    public void authorizeGithub(){
-        oAuthService.getAuthorize();
+    public void authorizeGithub(HttpServletRequest request,
+                                HttpServletResponse response){
+        oAuthService.getAuthorize(response);
     }
 
     @GetMapping("/callback")
@@ -32,13 +35,13 @@ public class GithubOAuthController {
             @RequestParam String code,
             @RequestParam String state){
 
-        String response = oAuthService.callback(code);
+        String response = oAuthService.callback(code, state);
 
         return ResponseEntity.ok()
                 .body(new ApiResponse<>(response));
     }
 
-    @GetMapping("/github")
+    @GetMapping("/token")
     public ResponseEntity<ApiResponse<GithubToken>> getToken(
             @RequestParam(value = "access_token") String accessToken,
             @RequestParam(value = "refresh_token") String refreshToken,

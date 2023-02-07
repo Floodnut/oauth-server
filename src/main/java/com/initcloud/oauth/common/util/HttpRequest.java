@@ -4,15 +4,35 @@ package com.initcloud.oauth.common.util;
 import com.initcloud.oauth.common.exception.ApiException;
 import com.initcloud.oauth.common.response.error.ErrorCode;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.JSONParser;
+
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
+@Slf4j
 @NoArgsConstructor
 public class HttpRequest {
+
+    public static String redirect(HttpServletResponse response,
+                                HttpParam.Header header,
+                                String base,
+                                String path,
+                                String query){
+
+        String fullUrl = base;
+
+        if(path != null)
+            fullUrl += path;
+
+        if(query != null)
+            fullUrl += query;
+
+        return fullUrl;
+    }
 
     public static Object get(HttpParam.Header header,
                              String base,
@@ -29,6 +49,7 @@ public class HttpRequest {
 
             JSONParser jsonParser = new JSONParser();
             URL url = new URL(fullUrl);
+            log.info(fullUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setUseCaches(false);
@@ -68,6 +89,7 @@ public class HttpRequest {
                 fullUrl += query;
 
             URL url = new URL(fullUrl);
+            log.info(fullUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setUseCaches(false);

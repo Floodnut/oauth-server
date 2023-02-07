@@ -92,7 +92,7 @@ public class HttpParam {
             sb.append("?");
 
             for(int i = 0 ; i < this.keys.size() ; i++)
-                sb.append( this.keys.get(i) + "=" + this.values.get(i) + "&");
+                sb.append(this.keys.get(i) + "=" + this.values.get(i) + "&");
 
             return sb.toString();
         }

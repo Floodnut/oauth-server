@@ -30,12 +30,14 @@ public class Properties {
 
     @PostConstruct
     public void oAuthInit(){
-        this.baseUrl = environment.getProperty("BASE_URL");
-        this.callback = environment.getProperty("CALLBACK");
-        this.appClientId = environment.getProperty("GITHUB_APP_CLIENT_ID");
-        this.appClientSecret = environment.getProperty("GITHUB_APP_CLIENT_SECRET");
+        this.baseUrl = environment.getProperty("GITHUB_BASE_URL");
+        this.callback = environment.getProperty("GITHUB_CALLBACK");
+        this.appClientId = environment.getProperty("GITHUB_CLIENT_ID");
+        this.appClientSecret = environment.getProperty("GITHUB_CLIENT_SECRET");
 
-        log.info("GITHUB_APP_CLIENT_ID is " + this.appClientId);
-        log.info("GITHUB_APP_CLIENT_SECRET is " + this.appClientSecret);
+        log.info("GITHUB_BASE_URL is " + this.baseUrl);
+        log.info("GITHUB_CALLBACK is " + this.callback);
+        log.info("GITHUB_CLIENT_ID is " + this.appClientId);
+        log.info("GITHUB_CLIENT_SECRET is " + this.appClientSecret);
     }
 }
